@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Chillax";
+  src: url("/fonts/Chillax-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@theme{
+  --font-chillax: "Chillax", sans-serif;
+  --border-color: #a7a7a7;
+  --body-color: rgb(233, 242, 245);
+  --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
