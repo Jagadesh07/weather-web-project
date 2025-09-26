@@ -1,12 +1,13 @@
+import{ Enter, generateContainer1, generateContainer2 } from './functions.js';
+import { getRandomCity } from './functions.js';
 
+const metrics = {
+  degree:'c',
+  speed:'kph'
+};
 const cities = ["London", "Paris", "New York", "Tokyo", "Chennai", "Sydney"];
+const inputBox = document.getElementById("input");
 
-// Generate random city
-function getRandomCity(excludeCity = null) {
-  const availableCities = excludeCity ? cities.filter(c => c !== excludeCity) : cities;
-  const randomIndex = Math.floor(Math.random() * availableCities.length);
-  return availableCities[randomIndex];
-}
 
 // Fetch weather data
 async function getWeather(city) {
@@ -15,12 +16,13 @@ async function getWeather(city) {
     const resp = await fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${city}&days=7&aqi=no&alerts=no`
     );
-    if (!resp.ok) throw new Error("City not found or API error");
+    if (!resp.ok) throw new Error("City not found or API error",alert("enter a valid city (or) check your spelling"));
     return await resp.json();
   } catch (err) {
     console.error(err);
   }
 }
+// 
 
 // Show main city weather
 async function showWeather(city) {
@@ -28,39 +30,9 @@ async function showWeather(city) {
   const weatherInfo = await getWeather(city);
   if (!weatherInfo) return;
 
-  document.getElementById("city").textContent = `${weatherInfo.location.name}, ${weatherInfo.location.country}`;
-
-  const localDate = new Date(weatherInfo.location.localtime);
-  document.getElementById("time").textContent =
-    `${localDate.getDate()} ${localDate.toLocaleString("en-US", { month: "short" })} ${localDate.getFullYear()}, ${localDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
-
-  const hourly = weatherInfo.forecast.forecastday[0].hour.slice(0, 4);
-  const forecastContainer = document.getElementById("forecast-container");
-  forecastContainer.innerHTML = "";
-
-  hourly.forEach((hour, i) => {
-    const card = document.createElement("div");
-    card.className = "flex px-10 pt-5 h-fit justify-around opacity-0 transition-opacity duration-500";
-    card.innerHTML = `
-      <div class="flex flex-col justify-center items-center h-full w-fit">
-        <h3 class="font-bold text-lg">${hour.time.split(" ")[1]}</h3>
-        <p class="text-gray-600 text-[12px]">${localDate.toLocaleString("en-US", { month: "short" })}</p>
-        <img src="${hour.condition.icon}" alt="icon" class="icon">
-        <p class="text-center capitalize text-xs">${hour.condition.text}</p>
-        <p>${Math.round(hour.temp_c)}°C</p>
-      </div>`;
-    forecastContainer.appendChild(card);
-
-    setTimeout(() => {
-      card.classList.remove("opacity-0");
-    }, 100 * i);
-  });
-
-  inputBox.value = "";
-
-  // Show a random city immediately
-  showRandomCity(weatherInfo.location.name);
+  generateContainer1(metrics,weatherInfo,inputBox,showRandomCity);
 }
+// 
 
 // Show random city
 async function showRandomCity(mainCity) {
@@ -93,36 +65,33 @@ async function showRandomCity(mainCity) {
     const dayTime = current.is_day === 1 ? "Day" : "Night";
     const time = new Date(current.last_updated).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
-    container.innerHTML = `
-      <div class="flex justify-between mt-5 mx-6 opacity-0 transition-opacity duration-500">
-        <h2 class="capitalize">${info.location.name}</h2>
-        <p class="capitalize">${time}</p>
-      </div>
-      <div class="flex flex-col justify-center items-center h-[60%] opacity-0 transition-opacity duration-500">
-        <img src="${current.condition.icon}" alt="icon">
-        <p class="capitalize">${current.condition.text}</p>
-      </div>
-      <div class="flex justify-between mt-5 mx-5 opacity-0 transition-opacity duration-500">
-        <p>${dayTime}</p>
-        <p>${Math.round(info.forecast.forecastday[0].day.maxtemp_c)} - ${Math.round(info.forecast.forecastday[0].day.mintemp_c)} °C</p>
-      </div>`;
-
+    generateContainer2(container,current,dayTime,info,time);
+    
     [...container.children].forEach(child => requestAnimationFrame(() => child.classList.remove("opacity-0")));
   }
 
   updateContainer(container, info1);
   updateContainer(containerTwo,info2);
 } 
+// 
+
+
 // Event listeners
-document.getElementById("search-btn").addEventListener("click", () => {
-  const inputBox = document.getElementById("input");
-  const city = inputBox.value || getRandomCity();
+function giveValue(){
+  const city = inputBox.value || getRandomCity(cities);
   showWeather(city);
+}
+// 
+
+//input listener
+ Enter(inputBox,giveValue);
+document.getElementById("search-btn").addEventListener("click", () => {
+ giveValue();
 });
 
 // On load
 window.addEventListener("load", () => {
-  const city = getRandomCity();
+  const city = getRandomCity(cities);
   showWeather(city);
 });
 

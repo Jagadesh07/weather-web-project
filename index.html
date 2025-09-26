@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+<!--  -->
     <link rel="stylesheet" href="./dist/output.css">
-    <link rel="stylesheet" href="./src/index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="bg-[var(--body-color)] font-chillax text-black min-h-screen">
-    <div class="h-fit w-full flex justify-center items-center pt-5">
+<body class="bg-[var(--body-color)] text-black min-h-screen ">
+
+    <div class="h-fit w-full flex justify-center items-center pt-5 ">
          <input type="text" placeholder="Enter city" id="input" class="bg-white rounded-[10px] shadow-[var(--box-shadow)] text-black p-5 w-70 h-5">
-        <button id="search-btn" class="bg-white p-2 m-1 rounded-[10px] shadow-[var(--box-shadow)] text-black">search</button>
+        <button id="search-btn" class="bg-white p-2 px-4 m-1 rounded-2xl shadow-[var(--box-shadow)] text-black"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
    
     <div class="grid grid-cols-7 grid-rows-6 gap-8 p-15 h-full w-full">
 
-    <div class="bg-white rounded-2xl col-span-3 row-span-2" >
+    <div class="bg-white rounded-2xl col-span-3 row-span-2 w-full overflow-x-scroll">
         <div class="flex justify-around w-full pt-5 pb-1">
-            <p class="font-bold" id="city">City</p>
+            <p class="font-bold city">City</p>
             <p class="font-bold" id="time">time</p>
         </div>
         <div class="w-[90%] mt-1 mx-auto rounded-2xl bg-blue-500 h-1"></div>
-        <div id="forecast-container" class="flex justify-around items-center h-50 mb-5">
+        <div id="forecast-container" class="flex justify-around items-center h-50 w-full mb-5 overflow-x-scroll">
             <h1 class="text-2xl ">Search a city</h1>
         </div>
         </div>
@@ -32,8 +37,15 @@
     <div class="bg-yellow-400 rounded-2xl col-span-1 row-span-2 text-black!" id="random-city-container2"></div>
 
 
-    <div class="bg-white rounded-2xl col-span-2 row-span-2"></div>
-    <div class="bg-white rounded-2xl col-span-2 row-span-2"></div>
+    <div class="bg-white rounded-2xl col-span-2 row-span-2 grid grid-cols-1">
+        <div>
+            <h1 class="text-center pt-5 city">city</h1>
+            <div class="text-center condition flex flex-col">conditions</div>
+        </div>
+        <div class="flex justify-around items-center w-full m-auto" id="other-info"></div>
+</div>
+
+    <div class="bg-white rounded-2xl col-span-2 row-span-2 over"></div>
     <div class="bg-white rounded-2xl row-span-2"></div>
     <div class="bg-white rounded-2xl row-span-1 col-span-2"></div>
     <div class="bg-white rounded-2xl col-span-2 row-span-4 row-start-3 col-start-6"></div>
@@ -42,5 +54,8 @@
     </div> 
     <script type="module" src="src/script.js"></script>
 
+    <!-- fontAwesome -->
+     <script src="https://kit.fontawesome.com/4435ab871f.js" crossorigin="anonymous"></script>
+     <!--  -->
 </body>
 </html>

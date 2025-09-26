@@ -97,7 +97,7 @@
             "temp_f": 52.6,
             "is_day": 0,
             "condition": {
-              "text": "Clear ",
+              "text": "Clear",
               "icon": "//cdn.weatherapi.com/weather/64x64/night/113.png",
               "code": 1000
             },
