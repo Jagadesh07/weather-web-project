@@ -25,7 +25,7 @@ export function generateContainer1(container, weatherInfo, metrics) {
   container.innerHTML = `
     <div class="text-center p-5 city"></div>
     <div class="p-5">
-      <p class="text-2xl font-bold">${weatherInfo.current.condition.text}</p>
+      <p class="text-2xl font-bold text-center">${weatherInfo.current.condition.text}</p>
     </div>
     <div class="p-5">
       <img class="w-20" src="${weatherInfo.current.condition.icon}" alt="icon">
