@@ -88,36 +88,31 @@ npm start
 
 Usage
 
-Enter a city or town in the search bar and press Enter.
+-Enter a city or town in the search bar and press Enter.
 
-Use the toggle to switch between Celsius and Fahrenheit.
+-Use the toggle to switch between Celsius and Fahrenheit.
 
-Scroll through hourly and daily forecasts for detailed predictions.
+-Scroll through hourly and daily forecasts for detailed predictions.
 
-Enable geolocation to view weather for your current location.
+-Enable geolocation to view weather for your current location.
 
-Technologies Used
+-Technologies Used
 
-Frontend: HTML, TailwindCSS, JavaScript
+-Frontend: HTML, TailwindCSS, JavaScript
 
-API: WeatherAPI.com
-Icons: Weather icons from WeatherAPI or custom SVGs
+-API: WeatherAPI.com
+-Icons: Weather icons from WeatherAPI or custom SVGs
 
-HTTP Requests: Fetch API or Axios
+-HTTP Requests: Fetch API or Axios
 
-API Reference
+-API Reference
 
-WeatherAPI.com endpoints used:
+-WeatherAPI.com endpoints used:
 
-Current Weather: /current.json
+-Current Weather: /current.json
 
-Forecast: /forecast.json
+-Forecast: /forecast.json
 
-Search Locations: /search.json
+-Search Locations: /search.json
 
-For full documentation, visit: WeatherAPI Documentation
-
-
-Screenshots
-![screenshot](./src/screenshots/screenshot-mobile-layout)
-
+-For full documentation, visit: WeatherAPI Documentation
