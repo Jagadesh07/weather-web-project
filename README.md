@@ -119,5 +119,5 @@ For full documentation, visit: WeatherAPI Documentation
 
 
 Screenshots
-![screenshot](src/screenshots/screenshot-mobile-layout)
+![screenshot](./src/screenshots/screenshot-mobile-layout)
 
