@@ -1,7 +1,5 @@
-  const weatherApiKey = "f3463b6437ba4ab284272653252509";
-
-
-//enter key listener
+import { weatherApiKey } from "./script.js";
+//Enter key listener
 export function Enter(value, callback){
   value.addEventListener('keydown',(Event)=>{
     if(Event.key === "Enter"){
@@ -17,9 +15,23 @@ export function getRandomCity(cities, excludeCity = null) {
   return availableCities[randomIndex];
 }
 // 
+//generate container 1
+export function generateContainer1(container,weatherInfo,metrics){
+  container.innerHTML = `
+  <div class="text-center p-5 city"></div>
+  <div class="p-5"><p class="text-2xl font-bold">${weatherInfo.current.condition.text}</p></div>
+  <div class="p-5"><img class="w-20" src="${weatherInfo.current.condition.icon}" alt="icon"></div>
+        <div class="p-5"><p class="text-2xl ">${Math.round(weatherInfo.current[`temp_${metrics.degree}`])}°${metrics.degree.toUpperCase()}</p></div>
+        `
+}
 
-// generate container 1
-export function generateContainer1(metrics, weatherInfo, inputBox, showRandomCity) {
+
+
+// generate container 4
+export function generateContainer4(metrics, weatherInfo, inputBox, showRandomCity) {
+document.querySelectorAll('.dayTime').forEach(el => {
+  el.innerHTML = weatherInfo.current.is_day === 1 ? "Day" : "Night";
+})
 
   document.querySelectorAll('.city').forEach(el => {
     el.innerHTML = `${weatherInfo.location.name}, ${weatherInfo.location.country}`;
@@ -28,7 +40,7 @@ export function generateContainer1(metrics, weatherInfo, inputBox, showRandomCit
 const lastUpdated = document.getElementById("last-updated");
 if (lastUpdated) {
   lastUpdated.innerHTML = `
-    <p class="text-xs font-semibold text-red-500">Last Updated: ${weatherInfo.current.last_updated}</p>
+    <p class="text-xs font-semibold text-gray-600">Last Updated: ${weatherInfo.current.last_updated}</p>
   `;
 }
 
@@ -81,10 +93,11 @@ if (lastUpdated) {
   `;
 
   document.querySelector('.condition').innerHTML = `
-    <p class="text-center capitalize text-xs">${weatherInfo.current.condition.text}</p>
+    <p class="text-center capitalize text-xs">${dayTime}</p>
     <img src="src/animated-weather-icons/clear-${dayTime}.svg" class="pt-5 m-auto" alt="condition icon">
   `;
 }
+
 
 // 
 
@@ -107,12 +120,12 @@ export function generateContainer2(container,current,dayTime,info,time){
     
 }
 
-// 
+// suggestion boxs
 const inputBox = document.getElementById("input");
 const suggestionBox = document.createElement("ul");
 
 suggestionBox.className =
-  "absolute z-10 mt-10 top-5 left-1/2s bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto w-[280px] hidden";
+  "absolute z-10 mt-10 top-5 md:left-1/2 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto w-[280px] hidden";
 
 inputBox.parentElement.appendChild(suggestionBox);
 
