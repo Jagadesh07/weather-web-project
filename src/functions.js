@@ -144,7 +144,7 @@ export function generateContainer2(container, current, dayTime, info, time) {
 const inputBox = document.getElementById("input");
 const suggestionBox = document.createElement("ul");
 suggestionBox.className =
-  "absolute z-10 mt-2 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto w-[280px] hidden";
+  "absolute z-10 top-20 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto w-[280px] hidden";
 
 inputBox.parentElement.appendChild(suggestionBox);
 
