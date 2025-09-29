@@ -9,7 +9,10 @@ const cities = ["London", "Paris", "New York", "Tokyo", "Chennai", "Sydney"];
 const inputBox = document.getElementById("input");
 const mainContainer = document.getElementById("main-container");
 export const weatherApiKey = "f3463b6437ba4ab284272653252509";
+
+// -------------------------
 // Fetch weather data
+// -------------------------
 async function getWeather(city) {
   try {
     const resp = await fetch(
@@ -28,19 +31,25 @@ async function getWeather(city) {
   }
 }
 
+// -------------------------
 // Show main city weather
+// -------------------------
 async function showWeather(city) {
 const weatherInfo = await getWeather(city);
 if (!weatherInfo || !weatherInfo.location) {
   alert("Weather data unavailable for this city.");
   return;
 }
+ mainContainer.innerHTML = `<p class="text-gray-500 text-center mt-10 animate-pulse">Loading...</p>`;
   generateContainer1(mainContainer,weatherInfo,metrics);
   generateContainer4(metrics,weatherInfo,inputBox,showRandomCity);
 }
 // 
 
+
+// -------------------------
 // Show random city
+// -------------------------
 async function showRandomCity(mainCity) {
   const container = document.getElementById("random-city-container");
   const containerTwo = document.getElementById("random-city-container2");
@@ -79,30 +88,37 @@ async function showRandomCity(mainCity) {
 } 
 // 
 
-
+// -------------------------
 // Event listeners
+// -------------------------
 function giveValue(){
   const city = inputBox.value || getRandomCity(cities);
   showWeather(city);
 }
 // 
 
+// -------------------------
 //input listener
+// -------------------------
  Enter(inputBox,giveValue);
 
 document.getElementById("search-btn").addEventListener("click", () => {
  giveValue();
 });
 
+// -------------------------
 // On load
+// -------------------------
 window.addEventListener("load", () => {
   const city = getRandomCity(cities);
   showWeather(city);
 });
 
+// -------------------------
 // Random city update every 10 seconds based on main city
+// -------------------------
 setInterval(() => {
-  const cityEl = document.getElementById("city");
+const cityEl = document.querySelector(".city");
   if (cityEl) {
     const mainCity = cityEl.innerText.split(",")[0];
     showRandomCity(mainCity);
