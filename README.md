@@ -55,7 +55,7 @@ A sleek and responsive **weather web application** built with **TailwindCSS** an
 
 ## Demo
 
-View the live demo here: [Live Demo](#https://jagadesh07.github.io/weather-web-project/)
+View the live demo here: [Live Demo](https://jagadesh07.github.io/weather-web-project/)
 
 ---
 
