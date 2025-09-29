@@ -3,6 +3,7 @@
 @theme {
   --border-color: #a7a7a7;
   --body-color: rgb(233, 242, 245);
+  --highlight-color:#3c3845;
   --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 

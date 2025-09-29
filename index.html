@@ -13,45 +13,52 @@
 </head>
 <body class="bg-[var(--body-color)] text-black min-h-screen ">
 
-    <div class="h-fit w-full flex justify-center items-center pt-5 ">
-         <input type="text" placeholder="Enter city" id="input" class="bg-white rounded-[10px] shadow-[var(--box-shadow)] text-black p-5 w-70 h-5">
+    <div class="h-fit w-full flex justify-center items-center pt-5 px-10 ">
+         <input type="text" placeholder="Enter city" id="input" class="bg-white rounded-[10px] shadow-[var(--box-shadow)] text-black p-5 w-full h-5 xl:w-70">
         <button id="search-btn" class="bg-white p-2 px-4 m-1 rounded-2xl shadow-[var(--box-shadow)] text-black"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
-   
-    <div class="grid grid-cols-7 grid-rows-6 gap-8 p-15 h-full w-full">
+   <div class="w-full col-span-2 ml-11 my-5" id="last-updated"></div> 
 
-    <div class="bg-white rounded-2xl col-span-3 row-span-2 w-full overflow-x-scroll">
+
+
+      <div class="grid gap-5 px-10 h-full w-full grid-cols-2 2xl:grid-cols-7 2xl:grid-rows-6">
+
+    <div class="bg-white rounded-2xl col-span-2 w-full row-span-4 2xl:col-span-3 2xl:row-span-2 ">
         <div class="flex justify-around w-full pt-5 pb-1">
-            <p class="font-bold city">City</p>
-            <p class="font-bold" id="time">time</p>
+            <p class="font-bold text-xs mx-3 sm:text-lg city">City</p>
+            <p class="font-bold text-xs mx-3 sm:text-lg" id="time">time</p>
         </div>
         <div class="w-[90%] mt-1 mx-auto rounded-2xl bg-blue-500 h-1"></div>
-        <div id="forecast-container" class="flex justify-around items-center h-50 w-full mb-5 overflow-x-scroll">
+        <div id="forecast-container" class="flex justify-around items-center w-full overflow-y-scroll flex-wrap 2xl:mt-5">
             <h1 class="text-2xl ">Search a city</h1>
         </div>
         </div>
 
-    <div class="bg-blue-400 rounded-2xl col-span-1 row-span-2 text-white!" id="random-city-container"></div>
+    <div class="bg-blue-400 rounded-2xl flex flex-col justify-around text-white! sm:row-span-2 2xl:col-span-1 2xl:row-span-2" id="random-city-container"></div>
 
 
-    <div class="bg-yellow-400 rounded-2xl col-span-1 row-span-2 text-black!" id="random-city-container2"></div>
+    <div class="bg-[var(--highlight-color)] flex flex-col justify-around text-white! sm:row-span-2 rounded-2xl 2xl:col-span-1 2xl:row-span-2" id="random-city-container2"></div>
 
-
-    <div class="bg-white rounded-2xl col-span-2 row-span-2 grid grid-cols-1">
+    <div class="bg-white rounded-2xl h-fit grid col-span-2 items-center grid-cols-1 2xl:row-span-2 ">
         <div>
             <h1 class="text-center pt-5 city">city</h1>
             <div class="text-center condition flex flex-col">conditions</div>
         </div>
-        <div class="flex justify-around items-center w-full m-auto" id="other-info"></div>
+        <div class="flex justify-around items-center flex-wrap w-full m-auto 2xl:h-fit" id="other-info"></div>
 </div>
 
-    <div class="bg-white rounded-2xl col-span-2 row-span-2 over"></div>
-    <div class="bg-white rounded-2xl row-span-2"></div>
-    <div class="bg-white rounded-2xl row-span-1 col-span-2"></div>
-    <div class="bg-white rounded-2xl col-span-2 row-span-4 row-start-3 col-start-6"></div>
-    <div class="bg-white rounded-2xl col-span-3 row-span-2"></div>
-    <div class="bg-white rounded-2xl col-span-2 row-span-3 row-start-4 col-start-4"></div>
+    <div class="bg-white rounded-2xl col-span-2 h-fit xl:h-full 2xl:col-span-2 2xl:row-span-2">
+
+    </div>
+
+    <div class="bg-white rounded-2xl 2xl:row-span-2 xl:h-full"></div>
+    <div class="bg-white rounded-2xl 2xl:row-span-1 2xl:col-span-2 xl:h-full"></div>
+    <div class="bg-white rounded-2xl 2xl:col-span-2 2xl:row-span-4 2xl:row-start-3 2xl:col-start-6 xl:h-full"></div>
+    <div class="bg-white rounded-2xl 2xl:col-span-3 2xl:row-span-2 xl:h-full"></div>
+    <div class="bg-white rounded-2xl 2xl:col-span-2 2xl:row-span-3 2xl:row-start-4 2xl:col-start-4 xl:h-full"></div>
     </div> 
+
+    
     <script type="module" src="src/script.js"></script>
 
     <!-- fontAwesome -->

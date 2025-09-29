@@ -1,3 +1,6 @@
+  const weatherApiKey = "f3463b6437ba4ab284272653252509";
+
+
 //enter key listener
 export function Enter(value, callback){
   value.addEventListener('keydown',(Event)=>{
@@ -16,79 +19,131 @@ export function getRandomCity(cities, excludeCity = null) {
 // 
 
 // generate container 1
-export function generateContainer1(metrics,weatherInfo,inputBox,showRandomCity){
-    document.querySelectorAll('.city').forEach(el =>{el.innerHTML = `${weatherInfo.location.name}, ${weatherInfo.location.country}`;})
+export function generateContainer1(metrics, weatherInfo, inputBox, showRandomCity) {
 
-    const localDate = new Date(weatherInfo.location.localtime);
-    document.getElementById("time").textContent =`${localDate.getDate()} ${localDate.toLocaleString("en-US", { month: "short" })} ${localDate.getFullYear()}, ${localDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
-
-    const hourly = weatherInfo.forecast.forecastday[0].hour.slice(0, 4);
-    const forecastContainer = document.getElementById("forecast-container");
-    forecastContainer.innerHTML = "";
-    const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
-
-
-    inputBox.value = "";
-
-  // Show a random city immediately
-showRandomCity(weatherInfo.location.name);
-
-    hourly.forEach((hour, i) => {
-        const card = document.createElement("div");
-        card.className = "flex px-10 pt-5 h-fit justify-around opacity-0 transition-opacity duration-500";
-        card.innerHTML = `
-      <div class="flex flex-col justify-center items-center h-full w-fit">
-        <h3 class="font-bold text-lg">${hour.time.split(" ")[1]}</h3>
-        <p class="text-gray-600 text-[12px]">${localDate.toLocaleString("en-US", { month: "short" })}</p>
-        <img src="${hour.condition.icon}" alt="icon" class="icon">
-        <p class="text-center capitalize text-xs">${hour.condition.text}</p>
-        <p>${Math.round(hour[`temp_${metrics.degree}`])}°${metrics.degree.toUpperCase()}</p>
-      </div>`;
-
-      
-    forecastContainer.appendChild(card);
-
-    document.getElementById("other-info").innerHTML = `
-    <div class="bg-gray-50 p-5 rounded-2xl flex flex-col justify-between items-center ">
-            <img src="src/animated-weather-icons/wind.svg" alt="wind">
-            <p>${hour.wind_kph}kph</p>
-        </div> 
-        <div class="bg-gray-50 p-5 rounded-2xl flex flex-col justify-between items-center ">
-            <img src="src/animated-weather-icons/wind.svg" alt="wind">
-            <p>wind speed</p>
-        </div> 
-        <div class="bg-gray-50 p-5 rounded-2xl flex flex-col justify-between items-center ">
-            <img src="src/animated-weather-icons/wind.svg" alt="wind">
-            <p>wind speed</p>
-        </div>
-        `
-
-    document.querySelector('.condition').innerHTML = `<p class="text-center capitalize text-xs">${hour.condition.text}</p>
-    <img src="src/animated-weather-icons/clear-${dayTime}.svg" class="pt-5 m-auto"></img>`
-
-    setTimeout(() => {
-      card.classList.remove("opacity-0");
-    }, 100 * i);
+  document.querySelectorAll('.city').forEach(el => {
+    el.innerHTML = `${weatherInfo.location.name}, ${weatherInfo.location.country}`;
   });
 
+const lastUpdated = document.getElementById("last-updated");
+if (lastUpdated) {
+  lastUpdated.innerHTML = `
+    <p class="text-xs font-semibold text-red-500">Last Updated: ${weatherInfo.current.last_updated}</p>
+  `;
 }
+
+
+  const localDate = new Date(weatherInfo.location.localtime);
+  document.getElementById("time").textContent =
+    `${localDate.getDate()} ${localDate.toLocaleString("en-US", { month: "short" })} ${localDate.getFullYear()}, ${localDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
+
+  const hourly = weatherInfo.forecast.forecastday[0].hour.slice(0, 4);
+  const forecastContainer = document.getElementById("forecast-container");
+  forecastContainer.innerHTML = "";
+
+  const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
+  inputBox.value = "";
+
+  showRandomCity(weatherInfo.location.name);
+
+  hourly.forEach((hour, i) => {
+    const card = document.createElement("div");
+    card.className = "flex h-fit justify-around p-3 opacity-0 transition-opacity duration-500";
+    card.innerHTML =`
+      <div class="flex flex-col justify-between items-center h-1/2 w-1/2 basis-1/2">
+        <h3 class="font-bold">${hour.time.split(" ")[1]}</h3>
+        <p class="text-gray-600 text-[12px]">${localDate.toLocaleString("en-US", { month: "short" })}</p>
+        <img src="${hour.condition.icon}" alt="icon" class="icon w-30">
+        <p class="text-center capitalize text-[10px] sm:text-xs">${hour.condition.text}</p>
+        <p>${Math.round(hour[`temp_${metrics.degree}`])}°${metrics.degree.toUpperCase()}</p>
+      </div>
+    `;
+    forecastContainer.appendChild(card);
+    setTimeout(() => card.classList.remove("opacity-0"), 100 * i);
+  });
+
+  document.getElementById("other-info").innerHTML = `
+    <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
+      <p class="text-[10px] md:text-xs font-medium">wind speed</p>
+    <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/wind.svg" alt="wind">
+      <p class="text-xs">${weatherInfo.current.wind_kph} kph</p>
+    </div> 
+    <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
+      <p class="text-[10px] md:text-xs font-medium">Moon Phase</p>
+      <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/moon-phases/${weatherInfo.forecast.forecastday[0].astro.moon_phase}.svg" alt="moon phase">
+      <p class="text-[8px] font-bold">${weatherInfo.forecast.forecastday[0].astro.moon_phase}</p>
+    </div> 
+    <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
+      <p class="text-xs">humidity</p>
+    <img class="w-[47px] md:w-[67px]" src="src/animated-weather-icons/humidity.svg" alt="humidity">
+      <p class="text-xs">${weatherInfo.current.humidity}%</p>
+    </div>
+  `;
+
+  document.querySelector('.condition').innerHTML = `
+    <p class="text-center capitalize text-xs">${weatherInfo.current.condition.text}</p>
+    <img src="src/animated-weather-icons/clear-${dayTime}.svg" class="pt-5 m-auto" alt="condition icon">
+  `;
+}
+
 // 
 
 //generate container 2
 export function generateContainer2(container,current,dayTime,info,time){
 
         container.innerHTML = `
-          <div class="flex justify-between mt-5 mx-6 opacity-0 transition-opacity duration-500">
-            <h2 class="capitalize">${info.location.name}</h2>
-            <p class="capitalize">${time}</p>
+          <div class="flex justify-between mt-2 md:mt-5 mx-3 opacity-0 transition-opacity duration-500 md:mx-5">
+            <h2 class="capitalize text-xs font-bold md:text-lg">${info.location.name}</h2>
+            <p class="capitalize text-xs md:text-lg">${time}</p>
           </div>
-          <div class="flex flex-col justify-center items-center h-[60%] opacity-0 transition-opacity duration-500">
-            <img src="${current.condition.icon}" alt="icon">
-            <p class="capitalize text-center px-5">${current.condition.text}</p>
+          <div class="flex flex-col justify-center items-center w-full self-center opacity-0 transition-opacity duration-500">
+            <img class="h-[60%] self-center" src="${current.condition.icon}" alt="icon">
+            <p class="capitalize text-center px-5 text-xs font-bold md:text-lg">${current.condition.text}</p>
           </div>
-          <div class="flex justify-between mt-5 mx-5 opacity-0 transition-opacity duration-500">
-            <p>${dayTime}</p>
-            <p>${Math.round(info.forecast.forecastday[0].day.maxtemp_c)} - ${Math.round(info.forecast.forecastday[0].day.mintemp_c)} °C</p>
+          <div class="flex justify-between mb-2 mx-3 opacity-0 transition-opacity duration-500 md:mx-5">
+            <p class="text-xs md:text-lg">${dayTime}</p>
+            <p class="text-xs md:text-lg">${Math.round(info.forecast.forecastday[0].day.maxtemp_c)} - ${Math.round(info.forecast.forecastday[0].day.mintemp_c)} °C</p>
           </div>`;
     
 }
+
+// 
+const inputBox = document.getElementById("input");
+const suggestionBox = document.createElement("ul");
+
+suggestionBox.className =
+  "absolute z-10 mt-10 top-5 left-1/2s bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto w-[280px] hidden";
+
+inputBox.parentElement.appendChild(suggestionBox);
+
+inputBox.addEventListener("input", async () => {
+  const query = inputBox.value.trim();
+  if (query.length < 2) {
+    suggestionBox.innerHTML = "";
+    suggestionBox.classList.add("hidden");
+    return;
+  }
+
+  const res = await fetch(`https://api.weatherapi.com/v1/search.json?key=${weatherApiKey}&q=${query}`);
+  const data = await res.json();
+
+  suggestionBox.innerHTML = "";
+  data.slice(0, 5).forEach(city => {
+    const li = document.createElement("li");
+    li.textContent = `${city.name}, ${city.country}`;
+    li.className = "px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm";
+    li.addEventListener("click", () => {
+      inputBox.value = city.name;
+      suggestionBox.classList.add("hidden");
+      document.getElementById("search-btn").click(); // trigger search
+    });
+    suggestionBox.appendChild(li);
+  });
+
+  suggestionBox.classList.remove("hidden");
+});
+
+
+document.addEventListener("click", e => {
+  if (!inputBox.contains(e.target)) suggestionBox.classList.add("hidden");
+});
