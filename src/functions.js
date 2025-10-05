@@ -76,18 +76,6 @@ export function generateContainer4(metrics, weatherInfo, inputBox) {
     setTimeout(() => card.classList.remove("opacity-0"), 100 * i);
   });
 
-// 4th-container
-
-// document.getElementById("fourth-container").innerHTML = `
-//         <div>
-//             <h1 class="text-center pt-5">${weatherInfo.location.name}, ${weatherInfo.location.country}</h1>
-//             <h1 class="text-center>${weatherInfo.current.condition.text}</h1>
-//         </div>
-        
-//         <div class="flex justify-around items-center flex-wrap w-full m-auto 2xl:h-fit" id="other-info"></div>
-//         `;
-
-
   // Other info section
   document.getElementById("other-info").innerHTML = `
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
@@ -159,7 +147,7 @@ inputBox.addEventListener("input", async () => {
     suggestionBox.classList.add("hidden");
     return;
   }
-
+t
   try {
     const res = await fetch(`https://api.weatherapi.com/v1/search.json?key=${weatherApiKey}&q=${query}`);
     if (!res.ok) throw new Error("API Error");

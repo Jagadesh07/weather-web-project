@@ -47,9 +47,13 @@ async function showWeather(city) {
     alert("Weather data unavailable for this city.");
     return;
   }
+ const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
+
+ document.getElementById("day-night-cycle").innerHTML = `
+<img src="src/animated-weather-icons/clear-${dayTime}.svg" alt="${dayTime}">
+ `
 
   // reusable class functions
-
 document.querySelectorAll('.city').forEach(el => {
   el.innerHTML =` ${weatherInfo.location.name}, ${weatherInfo.location.country}`;
 })
