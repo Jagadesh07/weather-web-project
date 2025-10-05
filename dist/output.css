@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-gray-50: oklch(98.5% 0.002 247.839);
@@ -24,6 +25,8 @@
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-lg: 1.125rem;
     --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
     --font-weight-medium: 500;
@@ -36,6 +39,7 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --border-color: #a7a7a7;
     --body-color: rgb(233, 242, 245);
     --highlight-color: #3c3845;
     --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -193,14 +197,8 @@
   .absolute {
     position: absolute;
   }
-  .relative {
-    position: relative;
-  }
   .top-20 {
     top: calc(var(--spacing) * 20);
-  }
-  .top-50 {
-    top: calc(var(--spacing) * 50);
   }
   .left-1 {
     left: calc(var(--spacing) * 1);
@@ -238,6 +236,9 @@
   .m-1 {
     margin: calc(var(--spacing) * 1);
   }
+  .m-5 {
+    margin: calc(var(--spacing) * 5);
+  }
   .m-auto {
     margin: auto;
   }
@@ -262,8 +263,8 @@
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
-  .ml-11 {
-    margin-left: calc(var(--spacing) * 11);
+  .ml-8 {
+    margin-left: calc(var(--spacing) * 8);
   }
   .flex {
     display: flex;
@@ -285,6 +286,21 @@
   }
   .h-5 {
     height: calc(var(--spacing) * 5);
+  }
+  .h-25 {
+    height: calc(var(--spacing) * 25);
+  }
+  .h-30 {
+    height: calc(var(--spacing) * 30);
+  }
+  .h-40 {
+    height: calc(var(--spacing) * 40);
+  }
+  .h-50 {
+    height: calc(var(--spacing) * 50);
+  }
+  .h-80 {
+    height: calc(var(--spacing) * 80);
   }
   .h-\[60\%\] {
     height: 60%;
@@ -316,11 +332,11 @@
   .w-30 {
     width: calc(var(--spacing) * 30);
   }
+  .w-80 {
+    width: calc(var(--spacing) * 80);
+  }
   .w-\[40px\] {
     width: 40px;
-  }
-  .w-\[47px\] {
-    width: 47px;
   }
   .w-\[90\%\] {
     width: 90%;
@@ -330,6 +346,9 @@
   }
   .w-\[280px\] {
     width: 280px;
+  }
+  .w-fit {
+    width: fit-content;
   }
   .w-full {
     width: 100%;
@@ -484,12 +503,13 @@
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
   .text-xs {
     font-size: var(--text-xs);
     line-height: var(--tw-leading, var(--text-xs--line-height));
-  }
-  .text-\[8px\] {
-    font-size: 8px;
   }
   .text-\[10px\] {
     font-size: 10px;
@@ -509,6 +529,12 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .text-nowrap {
+    text-wrap: nowrap;
+  }
+  .text-wrap {
+    text-wrap: wrap;
+  }
   .text-black {
     color: var(--color-black);
   }
@@ -520,6 +546,9 @@
   }
   .text-gray-600 {
     color: var(--color-gray-600);
+  }
+  .text-red-500 {
+    color: var(--color-red-500);
   }
   .text-white {
     color: var(--color-white);
@@ -606,11 +635,6 @@
   .md\:w-\[60px\] {
     @media (width >= 48rem) {
       width: 60px;
-    }
-  }
-  .md\:w-\[67px\] {
-    @media (width >= 48rem) {
-      width: 67px;
     }
   }
   .md\:w-fit {
@@ -705,6 +729,11 @@
       height: fit-content;
     }
   }
+  .\32 xl\:h-full {
+    @media (width >= 96rem) {
+      height: 100%;
+    }
+  }
   .\32 xl\:grid-cols-7 {
     @media (width >= 96rem) {
       grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -719,6 +748,34 @@
 @layer base {
   body {
     font-family: "Bricolage Grotesque", sans-serif;
+  }
+  @layer base {
+    .skeleton-loader {
+      position: relative;
+      overflow: hidden;
+    }
+    .skeleton-loader::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-repeat: no-repeat;
+      background-color: var(--border-color);
+      background-image: linear-gradient( 90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100% );
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+    @keyframes skeleton-shimmer {
+      from {
+        background-position: -200% 0;
+      }
+      to {
+        background-position: 200% 0;
+      }
+    }
   }
 }
 @property --tw-translate-x {

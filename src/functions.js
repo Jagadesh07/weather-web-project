@@ -3,8 +3,8 @@ import { weatherApiKey } from "./script.js";
 // -------------------------
 // ENTER KEY LISTENER
 // -------------------------
-export function Enter(value, callback) {
-  value.addEventListener("keydown", (e) => {
+export function Enter(inputElement, callback) {
+  inputElement.addEventListener("keydown", (e) => {
     if (e.key === "Enter") callback();
   });
 }
@@ -23,7 +23,7 @@ export function getRandomCity(cities, excludeCity = null) {
 // -------------------------
 export function generateContainer1(container, weatherInfo, metrics) {
   container.innerHTML = `
-    <div class="text-center p-5 city"></div>
+    <div class="text-center p-5 city">${weatherInfo.location.name}, ${weatherInfo.location.country}</div>
     <div class="p-5">
       <p class="text-2xl font-bold text-center">${weatherInfo.current.condition.text}</p>
     </div>
@@ -39,18 +39,8 @@ export function generateContainer1(container, weatherInfo, metrics) {
 // -------------------------
 // CONTAINER 4: FORECAST + EXTRA INFO
 // -------------------------
-export function generateContainer4(metrics, weatherInfo, inputBox, showRandomCity) {
-  // Update day/night
-  document.querySelectorAll(".dayTime").forEach(el => {
-    el.textContent = weatherInfo.current.is_day === 1 ? "Day" : "Night";
-  });
-
-  // Update city name
-  document.querySelectorAll(".city").forEach(el => {
-    el.textContent = `${weatherInfo.location.name}, ${weatherInfo.location.country}`;
-  });
-
-  // Last updated info
+export function generateContainer4(metrics, weatherInfo, inputBox) {
+  // Update last updated info
   const lastUpdated = document.getElementById("last-updated");
   if (lastUpdated) {
     lastUpdated.innerHTML = `
@@ -69,12 +59,6 @@ export function generateContainer4(metrics, weatherInfo, inputBox, showRandomCit
   const hourly = weatherInfo.forecast.forecastday[0].hour.slice(0, 4);
   const forecastContainer = document.getElementById("forecast-container");
   forecastContainer.innerHTML = "";
-
-  const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
-  inputBox.value = "";
-
-  // Update random city cards
-  showRandomCity(weatherInfo.location.name);
 
   hourly.forEach((hour, i) => {
     const card = document.createElement("div");
@@ -97,25 +81,32 @@ export function generateContainer4(metrics, weatherInfo, inputBox, showRandomCit
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-[10px] md:text-xs font-medium">Wind Speed</p>
       <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/wind.svg" alt="wind">
-      <p class="text-xs">${weatherInfo.current.wind_kph} kph</p>
+      <p class="text-xs">  ${weatherInfo.current[`wind_kph`]} kph</p>
     </div> 
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-[10px] md:text-xs font-medium">Moon Phase</p>
       <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/moon-phases/${weatherInfo.forecast.forecastday[0].astro.moon_phase}.svg" alt="moon phase">
-      <p class="text-[8px] font-bold">${weatherInfo.forecast.forecastday[0].astro.moon_phase}</p>
+      <p class="text-[10px] text-nowrap font-bold">${weatherInfo.forecast.forecastday[0].astro.moon_phase}</p>
     </div> 
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-xs">Humidity</p>
-      <img class="w-[47px] md:w-[67px]" src="src/animated-weather-icons/humidity.svg" alt="humidity">
+      <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/humidity.svg" alt="loading..">
       <p class="text-xs">${weatherInfo.current.humidity}%</p>
     </div>
   `;
 
   // Weather condition icon
-  document.querySelector(".condition").innerHTML = `
-    <p class="text-center capitalize text-xs">${dayTime}</p>
-    <img src="src/animated-weather-icons/clear-${dayTime}.svg" class="pt-5 m-auto" alt="condition icon">
-  `;
+  const mainCityContainer = document.querySelector("#main-container .condition");
+  if (mainCityContainer) {
+    const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
+    mainCityContainer.innerHTML = `
+      <p class="text-center capitalize text-xs">${dayTime}</p>
+      <img src="src/animated-weather-icons/clear-${dayTime}.svg" class="pt-5 m-auto" alt="condition icon">
+    `;
+  }
+
+  // Reset input
+  inputBox.value = "";
 }
 
 // -------------------------
@@ -133,11 +124,12 @@ export function generateContainer2(container, current, dayTime, info, time) {
     </div>
     <div class="flex justify-between mb-2 mx-3 opacity-0 transition-opacity duration-500 md:mx-5">
       <p class="text-xs md:text-lg">${dayTime}</p>
-      <p class="text-xs md:text-lg">${Math.round(info.forecast.forecastday[0].day.maxtemp_c)} - ${Math.round(info.forecast.forecastday[0].day.mintemp_c)} °C</p>
+      <p class="text-xs md:text-lg">
+        ${Math.round(info.forecast.forecastday[0].day[`maxtemp_c`])}°C - ${Math.round(info.forecast.forecastday[0].day[`mintemp_c`])}°C
+      </p>
     </div>
   `;
 }
-
 // -------------------------
 // SEARCH SUGGESTION BOX
 // -------------------------
