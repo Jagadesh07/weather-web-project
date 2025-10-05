@@ -35,6 +35,9 @@ async function getWeather(city) {
   }
 }
 
+
+
+
 // -------------------------
 // Show main city weather
 // -------------------------
@@ -44,6 +47,15 @@ async function showWeather(city) {
     alert("Weather data unavailable for this city.");
     return;
   }
+
+  // reusable class functions
+
+document.querySelectorAll('.city').forEach(el => {
+  el.innerHTML =` ${weatherInfo.location.name}, ${weatherInfo.location.country}`;
+})
+document.querySelectorAll('.condition').forEach(el => {
+  el.innerHTML = weatherInfo.current.condition.text;
+})
 
   mainContainer.innerHTML = `<p class="text-gray-500 text-center mt-10 animate-pulse">Loading...</p>`;
   generateContainer1(mainContainer, weatherInfo, metrics);

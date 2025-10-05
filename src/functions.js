@@ -76,12 +76,24 @@ export function generateContainer4(metrics, weatherInfo, inputBox) {
     setTimeout(() => card.classList.remove("opacity-0"), 100 * i);
   });
 
+// 4th-container
+
+// document.getElementById("fourth-container").innerHTML = `
+//         <div>
+//             <h1 class="text-center pt-5">${weatherInfo.location.name}, ${weatherInfo.location.country}</h1>
+//             <h1 class="text-center>${weatherInfo.current.condition.text}</h1>
+//         </div>
+        
+//         <div class="flex justify-around items-center flex-wrap w-full m-auto 2xl:h-fit" id="other-info"></div>
+//         `;
+
+
   // Other info section
   document.getElementById("other-info").innerHTML = `
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-[10px] md:text-xs font-medium">Wind Speed</p>
       <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/wind.svg" alt="wind">
-      <p class="text-xs">  ${weatherInfo.current[`wind_kph`]} kph</p>
+      <p class="text-xs"> ${weatherInfo.current[`wind_${metrics.speed}`]} ${metrics.speed}</p>
     </div> 
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-[10px] md:text-xs font-medium">Moon Phase</p>
