@@ -22,14 +22,14 @@
 <!-- grid starts -->
       <div class="grid gap-5 px-5 h-full w-full grid-cols-2 2xl:grid-cols-7 2xl:grid-rows-6">
 <!-- 1 -->
-      <div class="skeleton skeleton-loader bg-white flex flex-col justify-center items-center rounded-2xl col-span-2 h-80 xl:h-full 2xl:row-span-2" id="main-container">
-     
+      <div class="skeleton skeleton-loader bg-white flex flex-col justify-center items-center rounded-2xl col-span-2 h-90 xl:h-full 2xl:row-span-2" id="main-container">
+        
     </div>
 <!-- 2 -->
-    <div class="skeleton skeleton-loader bg-blue-400 rounded-2xl flex flex-col h-40 justify-around text-white! sm:row-span-2 2xl:h-full 2xl:col-span-1 2xl:row-span-2" id="random-city-container"></div>
+    <div class="skeleton skeleton-loader bg-blue-400 rounded-2xl flex flex-col h-40 w-full justify-around text-white! sm:row-span-2 2xl:h-full 2xl:col-span-1 2xl:row-span-2" id="random-city-container"></div>
 
 <!-- 3 -->
-    <div class="skeleton skeleton-loader bg-[var(--highlight-color)] flex flex-col h-full justify-around text-white! sm:row-span-2 rounded-2xl 2xl:col-span-1 2xl:row-span-2" id="random-city-container2"></div>
+    <div class="skeleton skeleton-loader bg-[var(--highlight-color)] flex flex-col h-40 w-full justify-around text-white! sm:row-span-2 rounded-2xl 2xl:h-full 2xl:col-span-1 2xl:row-span-2" id="random-city-container2"></div>
 <!-- 4 -->
     <div class="skeleton skeleton-loader bg-white rounded-2xl h-full grid col-span-2  items-center grid-cols-1 2xl:col-span-3 2xl:row-span-2">
         <div>
@@ -58,7 +58,7 @@
             <p class="text-xl font-bold">Cloud</p>
             <p class="text-xs">volume</p>
             <img src="src/animated-weather-icons/cloudy.svg" alt="">
-            <p id="cloud-vol">10%</p>
+            <p id="cloud-vol">no data</p>
         </div>
     </div>
 <!-- 7 -->
@@ -67,12 +67,22 @@
             <p class="text-xl font-bold">Snow</p>
             <p class="text-xs">chances</p>
             <img src="src/animated-weather-icons//snowy-3.svg" alt="">
-            <p id="snow-chances">no snow</p>
+            <p id="snow-chances">no data</p>
         </div>
     </div>
 
     <!-- 8 -->
-   <div class="skeleton skeleton-loader bg-white rounded-2xl col-span-2 2xl:row-span-2 xl:h-full"></div>
+   <div class="skeleton skeleton-loader flex justify-start items-center bg-white rounded-2xl col-span-2 2xl:row-span-2 xl:h-full">
+    <div class="flex justify-center items-center flex-col w-1/2">
+        <img src="src/videos/dew.gif" alt="" class="">
+    </div>
+<div class="flex flex-col justify-center items-center w-1/2">
+    <p class="capitalize text-sm 2xl:text-xl font-bold">dew-point</p>
+    <p class="capitalize text-lg 2xl:text-2xl text-blue-600" id="dew-point"></p>
+    <p class="capitalize text-sm 2xl:text-xl font-bold">precipitation</p>
+    <p class="capitalize ttext-lg 2xl:text-2xl text-blue-600" id="precip-point"></p>
+</div>
+   </div>
 
    <!-- 9 -->
     <div class="skeleton skeleton-loader bg-white rounded-2xl col-span-2 2xl:row-span-3 2xl:row-start-4 2xl:col-start-4 xl:h-full">large</div>

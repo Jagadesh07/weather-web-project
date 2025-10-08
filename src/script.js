@@ -3,7 +3,8 @@ import { getRandomCity } from './functions.js';
 
 export const metrics = {
   degree: 'c',
-  speed: 'kph'
+  speed: 'kph',
+  size: 'mm'
 };
 
 const cities = ["London", "Paris", "New York", "Tokyo", "Chennai", "Sydney"];
@@ -52,6 +53,10 @@ async function showWeather(city) {
  document.getElementById("day-night-cycle").innerHTML = `
 <img src="src/animated-weather-icons/clear-${dayTime}.svg" alt="${dayTime}">
  `
+ document.getElementById("dew-point").innerHTML =
+  `${weatherInfo.current[`dewpoint_${metrics.degree}`]}°${metrics.degree.toUpperCase()}`;
+ document.getElementById("precip-point").innerHTML =
+  `${weatherInfo.current[`precip_${metrics.size}`]}°${metrics.size}`;
 
   // reusable class functions
 document.querySelectorAll('.city').forEach(el => {
@@ -61,7 +66,7 @@ document.querySelectorAll('.condition').forEach(el => {
   el.innerHTML = weatherInfo.current.condition.text;
 })
 
-  mainContainer.innerHTML = `<p class="text-gray-500 text-center mt-10 animate-pulse">Loading...</p>`;
+  mainContainer.innerHTML = `<div class="flex justify-center items-center h-full w-full  animate-pulse"><img src="src/videos/loading.gif" alt="loading.." class="w-full rounded-2xl"></div>`;
   generateContainer1(mainContainer, weatherInfo, metrics);
   generateContainer4(metrics, weatherInfo, inputBox);
 
@@ -80,7 +85,9 @@ async function showRandomCity(mainCity) {
   const container2 = document.getElementById("random-city-container2");
 
   [container1, container2].forEach(cont => {
-    cont.innerHTML = `<div class="flex justify-center items-center h-full w-full text-white text-lg animate-pulse opacity-0 transition-opacity duration-500">Loading...</div>`;
+    cont.innerHTML = `<div class="flex justify-center items-center h-full w-full animate-pulse opacity-0 transition-opacity duration-500">
+  <img src="src/videos/loading.gif" alt="" class="w-1/2 rounded-2xl">
+</div>`;
     const loader = cont.firstChild;
     requestAnimationFrame(() => loader.classList.remove("opacity-0"));
   });
@@ -100,6 +107,9 @@ async function showRandomCity(mainCity) {
       const current = info.current;
       const dayTime = current.is_day === 1 ? "Day" : "Night";
       const time = new Date(current.last_updated).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+// -------------------------
+// Event listeners
       generateContainer2(container, current, dayTime, info, time);
       [...container.children].forEach(child => requestAnimationFrame(() => child.classList.remove("opacity-0")));
     };

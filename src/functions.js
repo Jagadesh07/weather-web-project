@@ -33,6 +33,7 @@ export function generateContainer1(container, weatherInfo, metrics) {
     <div class="p-5">
       <p class="text-2xl">${Math.round(weatherInfo.current[`temp_${metrics.degree}`])}°${metrics.degree.toUpperCase()}</p>
     </div>
+
   `;
 }
 
@@ -135,6 +136,7 @@ export function generateContainer2(container, current, dayTime, info, time) {
 // -------------------------
 const inputBox = document.getElementById("input");
 const suggestionBox = document.createElement("ul");
+
 suggestionBox.className =
   "absolute z-10 top-20 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto w-[280px] hidden";
 
@@ -142,25 +144,34 @@ inputBox.parentElement.appendChild(suggestionBox);
 
 inputBox.addEventListener("input", async () => {
   const query = inputBox.value.trim();
+
   if (query.length < 2) {
     suggestionBox.innerHTML = "";
     suggestionBox.classList.add("hidden");
     return;
   }
-t
-  try {
-    const res = await fetch(`https://api.weatherapi.com/v1/search.json?key=${weatherApiKey}&q=${query}`);
-    if (!res.ok) throw new Error("API Error");
-    const data = await res.json();
+suggestionBox.innerHTML = `<li class="px-3 py-2 text-gray-400 text-sm animate-pulse"> <img src="src/videos/loadingDots.gif" alt="loading.." class="w-full rounded-2xl"></li>`;
 
+  try {
+    // Fetch city suggestions
+    const res = await fetch(
+      `https://api.weatherapi.com/v1/search.json?key=${weatherApiKey}&q=${query}`
+    );
+
+    if (!res.ok) throw new Error("API Error");
+
+    const data = await res.json();
     suggestionBox.innerHTML = "";
+
     if (data.length === 0) {
-      suggestionBox.innerHTML = `<li class="px-3 py-2 text-gray-400 text-sm">No matches found</li>`;
+      suggestionBox.innerHTML =
+        `<li class="px-3 py-2 text-gray-400 text-sm">No matches found</li>`;
     } else {
-      data.slice(0, 5).forEach(city => {
+      data.slice(0, 5).forEach((city) => {
         const li = document.createElement("li");
         li.textContent = `${city.name}, ${city.country}`;
-        li.className = "px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm";
+        li.className =
+          "px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm";
         li.addEventListener("click", () => {
           inputBox.value = city.name;
           suggestionBox.classList.add("hidden");
@@ -173,11 +184,13 @@ t
     suggestionBox.classList.remove("hidden");
   } catch (err) {
     console.error("Suggestion API error:", err);
-    suggestionBox.innerHTML = `<li class="px-3 py-2 text-gray-400 text-sm">Error loading suggestions</li>`;
+    suggestionBox.innerHTML =
+      `<li class="px-3 py-2 text-gray-400 text-sm">Error loading suggestions</li>`;
     suggestionBox.classList.remove("hidden");
   }
 });
 
+// Hide suggestions when clicking outside
 document.addEventListener("click", (e) => {
   if (!inputBox.contains(e.target) && !suggestionBox.contains(e.target)) {
     suggestionBox.classList.add("hidden");
