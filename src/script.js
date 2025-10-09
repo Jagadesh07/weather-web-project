@@ -56,7 +56,7 @@ async function showWeather(city) {
  document.getElementById("dew-point").innerHTML =
   `${weatherInfo.current[`dewpoint_${metrics.degree}`]}°${metrics.degree.toUpperCase()}`;
  document.getElementById("precip-point").innerHTML =
-  `${weatherInfo.current[`precip_${metrics.size}`]}°${metrics.size}`;
+  `${weatherInfo.current[`precip_${metrics.size}`]}${metrics.size}`;
 
   // reusable class functions
 document.querySelectorAll('.city').forEach(el => {
