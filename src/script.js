@@ -155,3 +155,33 @@ setInterval(() => {
     showRandomCity(mainCity);
   }
 }, 10000);
+// -------------------------
+// SETTINGS BUTTON FUNCTION
+// -------------------------
+
+// Utility function to toggle between two buttons
+function toggleButtons(activeBtn, inactiveBtn) {
+  activeBtn.classList.add('bg-gray-100', 'text-black', 'shadow-md');
+  inactiveBtn.classList.remove('bg-gray-100', 'text-black', 'shadow-md');
+}
+
+// --- SPEED ---
+const btnKph = document.querySelector('.btn-option-kph');
+const btnMph = document.querySelector('.btn-option-mph');
+
+btnKph.addEventListener('click', () => toggleButtons(btnKph, btnMph));
+btnMph.addEventListener('click', () => toggleButtons(btnMph, btnKph));
+
+// --- DEGREE ---
+const btnC = document.querySelector('.btn-option-c');
+const btnF = document.querySelector('.btn-option-f');
+
+btnC.addEventListener('click', () => toggleButtons(btnC, btnF));
+btnF.addEventListener('click', () => toggleButtons(btnF, btnC));
+
+// --- SIZE ---
+const btnMm = document.querySelector('.btn-option-mm');
+const btnIn = document.querySelector('.btn-option-in');
+
+btnMm.addEventListener('click', () => toggleButtons(btnMm, btnIn));
+btnIn.addEventListener('click', () => toggleButtons(btnIn, btnMm));
