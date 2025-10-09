@@ -1,6 +1,6 @@
 import { Enter, generateContainer4, generateContainer2, generateContainer1 } from './functions.js';
 import { getRandomCity } from './functions.js';
-
+import { weatherIcons } from './icons.js';
 export const metrics = {
   degree: 'c',
   speed: 'kph',
@@ -51,7 +51,7 @@ async function showWeather(city) {
  const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
 
  document.getElementById("day-night-cycle").innerHTML = `
-<img src="src/animated-weather-icons/clear-${dayTime}.svg" alt="${dayTime}">
+<img src="src/icons/clear-${dayTime}.svg" alt="${dayTime}">
  `
  document.getElementById("dew-point").innerHTML =
   `${weatherInfo.current[`dewpoint_${metrics.degree}`]}°${metrics.degree.toUpperCase()}`;

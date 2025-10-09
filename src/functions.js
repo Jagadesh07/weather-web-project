@@ -23,15 +23,15 @@ export function getRandomCity(cities, excludeCity = null) {
 // -------------------------
 export function generateContainer1(container, weatherInfo, metrics) {
   container.innerHTML = `
-    <div class="text-center p-5 city">${weatherInfo.location.name}, ${weatherInfo.location.country}</div>
-    <div class="p-5">
-      <p class="text-2xl font-bold text-center">${weatherInfo.current.condition.text}</p>
+    <div class="text-center p-2 city text-xs">${weatherInfo.location.name}, ${weatherInfo.location.country}</div>
+    <div class="p-2">
+      <p class="text-lg font-bold text-center">${weatherInfo.current.condition.text}</p>
     </div>
-    <div class="p-5">
-      <img class="w-20" src="${weatherInfo.current.condition.icon}" alt="icon">
+    <div class="p-2">
+      <img class="w-8" src="${weatherInfo.current.condition.icon}" alt="icon">
     </div>
-    <div class="p-5">
-      <p class="text-2xl">${Math.round(weatherInfo.current[`temp_${metrics.degree}`])}°${metrics.degree.toUpperCase()}</p>
+    <div class="p-2">
+      <p class="text-lg">${Math.round(weatherInfo.current[`temp_${metrics.degree}`])}°${metrics.degree.toUpperCase()}</p>
     </div>
 
   `;
@@ -81,17 +81,17 @@ export function generateContainer4(metrics, weatherInfo, inputBox) {
   document.getElementById("other-info").innerHTML = `
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-[10px] md:text-xs font-medium">Wind Speed</p>
-      <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/wind.svg" alt="wind">
+      <img class="w-[40px] md:w-[60px]" src="src/icons/wind.svg" alt="wind">
       <p class="text-xs"> ${weatherInfo.current[`wind_${metrics.speed}`]} ${metrics.speed}</p>
     </div> 
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-[10px] md:text-xs font-medium">Moon Phase</p>
-      <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/moon-phases/${weatherInfo.forecast.forecastday[0].astro.moon_phase}.svg" alt="moon phase">
+      <img class="w-[40px] md:w-[60px]" src="src/icons/moon-phases/${weatherInfo.forecast.forecastday[0].astro.moon_phase}.svg" alt="moon phase">
       <p class="text-[10px] text-nowrap font-bold">${weatherInfo.forecast.forecastday[0].astro.moon_phase}</p>
     </div> 
     <div class="bg-gray-50 p-5 my-5 w-[100px] h-[100px] md:h-fit md:w-fit rounded-2xl flex flex-col justify-between items-center">
       <p class="text-xs">Humidity</p>
-      <img class="w-[40px] md:w-[60px]" src="src/animated-weather-icons/humidity.svg" alt="loading..">
+      <img class="w-[40px] md:w-[60px]" src="src/icons/humidity.svg" alt="loading..">
       <p class="text-xs">${weatherInfo.current.humidity}%</p>
     </div>
   `;
@@ -102,7 +102,7 @@ export function generateContainer4(metrics, weatherInfo, inputBox) {
     const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
     mainCityContainer.innerHTML = `
       <p class="text-center capitalize text-xs">${dayTime}</p>
-      <img src="src/animated-weather-icons/clear-${dayTime}.svg" class="pt-5 m-auto" alt="condition icon">
+      <img src="src/icons/clear-${dayTime}.svg" class="pt-5 m-auto" alt="condition icon">
     `;
   }
 
