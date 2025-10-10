@@ -1,17 +1,16 @@
-import { Enter, generateContainer4, generateContainer2, generateContainer1 } from './functions.js';
-import { getRandomCity } from './functions.js';
-import { weatherIcons } from './icons.js';
+import { Enter, generateContainer4, generateContainer2, generateContainer1, getRandomCity  } from './functions.js';
 export const metrics = {
   degree: 'c',
   speed: 'kph',
   size: 'mm'
 };
 
-const cities = ["London", "Paris", "New York", "Tokyo", "Chennai", "Sydney"];
+const cities = ["London", "Paris", "New York", "Tokyo", "Chennai", "Sydney","Berlin"];
 const inputBox = document.getElementById("input");
 const mainContainer = document.getElementById("main-container");
 export const weatherApiKey = "f3463b6437ba4ab284272653252509";
 
+// remove-skeleton-loader
 function removeSkeleton(el) {
   el.classList.remove("skeleton-loader");
 }
@@ -36,7 +35,7 @@ async function getWeather(city) {
   }
 }
 
-
+console.log(getWeather('chennai'));
 
 
 // -------------------------
@@ -44,15 +43,17 @@ async function getWeather(city) {
 // -------------------------
 async function showWeather(city) {
   const weatherInfo = await getWeather(city);
-  if (!weatherInfo || !weatherInfo.location) {
+  if (!weatherInfo.location) {
     alert("Weather data unavailable for this city.");
     return;
   }
  const dayTime = weatherInfo.current.is_day === 1 ? "day" : "night";
 
+//  day-night-cylce
  document.getElementById("day-night-cycle").innerHTML = `
-<img src="src/icons/clear-${dayTime}.svg" alt="${dayTime}">
- `
+<img src="src/icons/clear-${dayTime}.svg" alt="${dayTime}">`;
+
+// dew-points
  document.getElementById("dew-point").innerHTML =
   `${weatherInfo.current[`dewpoint_${metrics.degree}`]}°${metrics.degree.toUpperCase()}`;
  document.getElementById("precip-point").innerHTML =
@@ -66,11 +67,17 @@ document.querySelectorAll('.condition').forEach(el => {
   el.innerHTML = weatherInfo.current.condition.text;
 })
 
+// pre-loading-await-data
   mainContainer.innerHTML = `<div class="flex justify-center items-center h-full w-full  animate-pulse"><img src="src/videos/loading.gif" alt="loading.." class="w-full rounded-2xl"></div>`;
+
+  // generate the containers
   generateContainer1(mainContainer, weatherInfo, metrics);
   generateContainer4(metrics, weatherInfo, inputBox);
 
+  // skeleton-loader
   document.querySelectorAll('.skeleton').forEach(el => removeSkeleton(el));
+
+// cloud-snow-containers
   document.getElementById("cloud-vol").innerHTML = `${weatherInfo.current.cloud}%`;
   document.getElementById("snow-chances").innerHTML =  weatherInfo.forecast.forecastday[0].day.daily_chance_of_snow > 0 ? `${weatherInfo.forecast.forecastday[0].day.daily_chance_of_snow}%` : "none";
 
@@ -81,44 +88,53 @@ document.querySelectorAll('.condition').forEach(el => {
 // Show random city
 // -------------------------
 async function showRandomCity(mainCity) {
-  const container1 = document.getElementById("random-city-container");
-  const container2 = document.getElementById("random-city-container2");
+const container = document.querySelectorAll('.random-container')
+  // convert to array
+  container.forEach(cont => {
 
-  [container1, container2].forEach(cont => {
+    // loading-content
     cont.innerHTML = `<div class="flex justify-center items-center h-full w-full animate-pulse opacity-0 transition-opacity duration-500">
   <img src="src/videos/loading.gif" alt="" class="w-1/2 rounded-2xl">
 </div>`;
+
+    // remove-the-animation
     const loader = cont.firstChild;
     requestAnimationFrame(() => loader.classList.remove("opacity-0"));
+
   });
 
   try {
-    const availableCities = cities.filter(c => c !== mainCity);
+    const availableCities = cities.filter(city => city !== mainCity);
     if (availableCities.length < 2) throw new Error("Not enough cities");
+ 
+    container.forEach(async (container,index) => {
+      const cityName = availableCities[index];
+       const info = await getWeather(cityName);
+    if (!info) throw new Error("Weather data unavailable");
 
-    const city1 = getRandomCity(availableCities);
-    const city2 = getRandomCity(availableCities.filter(c => c !== city1));
-
-    const [info1, info2] = await Promise.all([getWeather(city1), getWeather(city2)]);
-
-    if (!info1 || !info2) throw new Error("Weather data unavailable");
-
-    const updateContainer = (container, info) => {
+    const updateContainer = (container, info ,cityName) => {
       const current = info.current;
       const dayTime = current.is_day === 1 ? "Day" : "Night";
       const time = new Date(current.last_updated).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
-// -------------------------
-// Event listeners
       generateContainer2(container, current, dayTime, info, time);
+
       [...container.children].forEach(child => requestAnimationFrame(() => child.classList.remove("opacity-0")));
+
+      container.addEventListener('click', () => {
+        showWeather(cityName);
+      })
     };
 
-    updateContainer(container1, info1);
-    updateContainer(container2, info2);
-  } catch (err) {
+    updateContainer(container, info,cityName);
+
+    }
+  )
+}
+
+catch (err) {
     console.error("Random city error:", err);
-    container1.innerHTML = container2.innerHTML =
+    container.innerHTML =
       `<div class="flex justify-center items-center h-full w-full text-red-500 text-sm">Failed to load city</div>`;
   }
 }
@@ -127,7 +143,7 @@ async function showRandomCity(mainCity) {
 // Event listeners
 // -------------------------
 function giveValue() {
-  const city = inputBox.value || getRandomCity(cities);
+  const city = inputBox.value;
   showWeather(city);
 }
 
@@ -135,7 +151,19 @@ function giveValue() {
 // Input listener
 // -------------------------
 Enter(inputBox, giveValue);
-document.getElementById("search-btn").addEventListener("click", giveValue);
+document.getElementById("search-btn").addEventListener("click", () => {
+   giveValue();
+
+   if(!inputBox.value){
+    document.getElementById("warnings").innerHTML = `Enter a city name to search`;
+    setTimeout(() => {
+    document.getElementById("warnings").innerHTML = ``;
+
+    },5000);
+
+   }
+  
+  });
 
 // -------------------------
 // On load
@@ -154,7 +182,7 @@ setInterval(() => {
     const mainCity = cityEl.innerText.split(",")[0];
     showRandomCity(mainCity);
   }
-}, 10000);
+}, 60000);
 // -------------------------
 // SETTINGS BUTTON FUNCTION
 // -------------------------
@@ -185,3 +213,32 @@ const btnIn = document.querySelector('.btn-option-in');
 
 btnMm.addEventListener('click', () => toggleButtons(btnMm, btnIn));
 btnIn.addEventListener('click', () => toggleButtons(btnIn, btnMm));
+
+// ----------------
+// SLIDER
+// ----------------
+const container = document.getElementById("top-cities-container");
+const prevBtn = document.getElementById("slider-prev");
+const nextBtn = document.getElementById("slider-next");
+
+let currentTranslate = 0;
+const moveAmount = 200; // how much to move per click
+
+// calculate max scroll distance
+const maxTranslate = container.scrollWidth - container.clientWidth;
+
+// Next button
+nextBtn.addEventListener("click", () => {
+  currentTranslate -= moveAmount;
+  if (-currentTranslate > maxTranslate) currentTranslate = -maxTranslate;
+
+  container.style.transform = `translateX(${currentTranslate}px)`;
+});
+
+// Prev button
+prevBtn.addEventListener("click", () => {
+  currentTranslate += moveAmount;
+  if (currentTranslate > 0) currentTranslate = 0;
+
+  container.style.transform = `translateX(${currentTranslate}px)`;
+});
