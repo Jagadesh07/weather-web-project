@@ -88,10 +88,17 @@
     <p class="text-lg 2xl:text-2xl text-blue-600" id="precip-point"></p>
 </div>
    </div>
-<!-- 7 -->
-  <div class="skeleton skeleton-loader rounded-2xl col-span-2 2xl:hidden"><h1 class="text-center">top cities</h1></div>
 
- <div class="flex gap-10 overflow-hidden w-fit h-fit col-span-2 transition-transform duration-300 ease-in-out" id="top-cities-container">
+   <!-- 8 -->
+    <div class="skeleton skeleton-loader bg-white rounded-2xl col-span-2 2xl:row-span-3 2xl:row-start-4 2xl:col-start-4 xl:h-full">large</div>
+
+      <!-- 9 -->
+    <div class="skeleton skeleton-loader bg-white rounded-2xl col-span-2 2xl:row-span-4 2xl:row-start-3 2xl:col-start-6 xl:h-full">largest</div>
+    </div>  
+<!-- 7 -->
+  <div class="skeleton skeleton-loader m-5 rounded-2xl col-span-2 2xl:hidden"><h1 class="text-center">top cities</h1></div>
+
+ <div class="flex gap-10 overflow-x-auto px-5 scroll-smooth w-full h-fit col-span-2 transition-transform duration-300 ease-in-out" id="top-cities-container">
 
      <div class="skeleton skeleton-loader flex-shrink-0 cursor-pointer bg-blue-400 rounded-2xl flex flex-col h-40 w-40 justify-around text-white! sm:row-span-2 2xl:h-full 2xl:col-span-1 2xl:row-span-2 snap-start random-container"></div>
 
@@ -107,19 +114,12 @@
 
     </div>
     <!-- slider -->
-     <div class="col-span-2 flex justify-center gap-5">
+     <div class="col-span-2 m-5 flex justify-center gap-5">
         <button class="skeleton skeleton-loader bg-white px-3 p-2 rounded-full flex justify-center items-center cursor-pointer" id="slider-prev"><i class="fa-solid fa-backward">
               </i></button>
         <button class="skeleton skeleton-loader bg-white px-3 p-2 rounded-full flex justify-center items-center cursor-pointer" id="slider-next"><i class="fa-solid fa-forward">
               </i></button>
     </div>
-
-   <!-- 8 -->
-    <div class="skeleton skeleton-loader bg-white rounded-2xl col-span-2 2xl:row-span-3 2xl:row-start-4 2xl:col-start-4 xl:h-full">large</div>
-
-      <!-- 9 -->
-    <div class="skeleton skeleton-loader bg-white rounded-2xl col-span-2 2xl:row-span-4 2xl:row-start-3 2xl:col-start-6 xl:h-full">largest</div>
-    </div>  
 
     <script type="module" src="src/script.js" defer></script>
 

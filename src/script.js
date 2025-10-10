@@ -222,7 +222,7 @@ const prevBtn = document.getElementById("slider-prev");
 const nextBtn = document.getElementById("slider-next");
 
 let currentTranslate = 0;
-const moveAmount = 200; // how much to move per click
+const moveAmount = 200;
 
 // calculate max scroll distance
 const maxTranslate = container.scrollWidth - container.clientWidth;
