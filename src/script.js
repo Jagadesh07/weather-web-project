@@ -35,7 +35,6 @@ async function getWeather(city) {
   }
 }
 
-console.log(getWeather('chennai'));
 
 
 // -------------------------
@@ -217,28 +216,13 @@ btnIn.addEventListener('click', () => toggleButtons(btnIn, btnMm));
 // ----------------
 // SLIDER
 // ----------------
+
+window.addEventListener('DOMContentLoaded', ()=>{
 const container = document.getElementById("top-cities-container");
 const prevBtn = document.getElementById("slider-prev");
 const nextBtn = document.getElementById("slider-next");
 
-let currentTranslate = 0;
-const moveAmount = 200;
-
-// calculate max scroll distance
-const maxTranslate = container.scrollWidth - container.clientWidth;
-
-// Next button
-nextBtn.addEventListener("click", () => {
-  currentTranslate -= moveAmount;
-  if (-currentTranslate > maxTranslate) currentTranslate = -maxTranslate;
-
-  container.style.transform = `translateX(${currentTranslate}px)`;
-});
-
-// Prev button
-prevBtn.addEventListener("click", () => {
-  currentTranslate += moveAmount;
-  if (currentTranslate > 0) currentTranslate = 0;
-
-  container.style.transform = `translateX(${currentTranslate}px)`;
-});
+nextBtn.addEventListener('click',()=>{
+ console.log('clicked');
+})
+})

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-x-auto">
+<html lang="en" class="overflow-x-hidden">
 <head>
 <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NimbusCast.app</title>
 </head>
-<body class="bg-[var(--body-color)] text-black min-h-screen max-w-full">
+<body class="bg-[var(--body-color)] text-black min-h-screen max-w-full overflow-x-hidden">
 
     <nav class="w-full h-fit flex items-center justify-between pr-5">
         <div><img src="src/logos/NimbusCastLogoBlack.png" alt="" class="h-20 w-auto"></div>
@@ -98,7 +98,7 @@
 <!-- 7 -->
   <div class="skeleton skeleton-loader m-5 rounded-2xl col-span-2 2xl:hidden"><h1 class="text-center">top cities</h1></div>
 
- <div class="flex gap-10 overflow-x-auto px-5 scroll-smooth w-full h-fit col-span-2 transition-transform duration-300 ease-in-out" id="top-cities-container">
+ <div class="flex gap-10 overflow-x-auto px-5 scroll-smooth w-full h-full col-span-2 transition-transform duration-300 ease-in-out" id="top-cities-container">
 
      <div class="skeleton skeleton-loader flex-shrink-0 cursor-pointer bg-blue-400 rounded-2xl flex flex-col h-40 w-40 justify-around text-white! sm:row-span-2 2xl:h-full 2xl:col-span-1 2xl:row-span-2 snap-start random-container"></div>
 
